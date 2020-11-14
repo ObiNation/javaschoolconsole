@@ -12,6 +12,7 @@ public class Student{
     private double GPA;
     private double totalPoints;
     List<Course> studentSchedule = new ArrayList<>();
+    List<Course> completedCourse = new ArrayList<>();
 
 
     public Student()
@@ -126,13 +127,15 @@ public class Student{
         System.out.println(" ");
     }
 
-    public void setCourseComplete(Course courseToCheck){
+    public void setCourseComplete(String courseIDToCheck){
         //set "isComplete to true for that course and call givesPointsEarned method and add getCourseHours too hoursDone
         for (Course course : this.studentSchedule ){
-            if (course.getCourseID().equals(courseToCheck)){ //need to fix this. it always returns false
+            if (course.getCourseID().equals(courseIDToCheck)){
                 course.setComplete(true);
                 this.totalPoints = this.totalPoints + course.givePointsEarned();
                 hoursDone = hoursDone + course.getCourseHours();
+                completedCourse.add(course);
+                studentSchedule.remove(course);
             }
 
         }
