@@ -309,7 +309,7 @@ public class Main {
                         String courseIdToSearch = courseToAdd.nextLine();
                         for (Course searchCourse : courseList){
                             if (searchCourse.getCourseID().equals(courseIdToSearch)){
-                                searchStudent.setCourseComplete(searchCourse);
+                                searchStudent.setCourseComplete(courseIdToSearch);
                             }
                         }
                         mainMenu();
@@ -328,6 +328,20 @@ public class Main {
     }
 
 
+
+    /*public static void courseRoster(){
+        /iterate through studentSchedule in every element inside studentList and if they have a course that matches the
+        course ID, print out their name/
+        System.out.println("How would you like to search for");
+        System.out.println("================================================");
+        System.out.println("1: Search course by Name");
+        System.out.println("2: Search course by ID");
+        System.out.println("3: Search course by course code");
+        System.out.println("4: Search course by professor's last name");
+        System.out.println("0: Back to previous menu");
+
+
+    }*/
 
     /*
 
