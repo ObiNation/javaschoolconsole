@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //Create the class for students
 public class Student{
     private String firstName;
     private String lastName;
     private String studentID;
-    private String eduLevel;
+    private final String eduLevel;
     private double hoursDone;
     private String fullName;
     private double GPA;
@@ -61,20 +62,10 @@ public class Student{
         this.fullName = fullName;
     }
 
-    public double getGPA() {
-        return GPA;
-    }
 
-    public void calculateGPA(){
-        //add up all the points earned over to calculate gpa
-        for (Course course : this.studentSchedule){
-            totalPoints = course.givePointsEarned() + totalPoints;
-        }
-
-        this.GPA = totalPoints / this.hoursDone;
-    }
 
     public void printStudentInfo(){
+        boolean scheduleEmpty = studentSchedule.isEmpty();
         System.out.println("Student info");
         System.out.println("====================================");
         System.out.println("Name: " + this.firstName + " " + this.lastName );
@@ -82,13 +73,19 @@ public class Student{
         System.out.println("Level: " + this.eduLevel);
         System.out.println("Hours done: " + this.hoursDone);
         System.out.println("Student is currently a " + getEdu());
-        System.out.println("Getting schedule...");
-        System.out.print(" ");
-        System.out.print(" ");
-        for (Course course : studentSchedule){
+        System.out.println("GPA: " + this.GPA);
+        if (scheduleEmpty){
+            System.out.println("Student is not enrolled in any classes yet");
+        }
+        else {
+            System.out.println("Getting schedule...");
             System.out.print(" ");
-            course.printCourseInfo();
-            System.out.println(" ");
+            System.out.print(" ");
+            for (Course course : studentSchedule) {
+                System.out.print(" ");
+                course.printCourseInfo();
+                System.out.println(" ");
+            }
         }
 
 
@@ -127,12 +124,17 @@ public class Student{
         System.out.println(" ");
     }
 
+
+
     public void setCourseComplete(String courseIDToCheck){
         //set "isComplete to true for that course and call givesPointsEarned method and add getCourseHours too hoursDone
+        Scanner input = new Scanner(System.in);
         for (Course course : this.studentSchedule ){
             if (course.getCourseID().equals(courseIDToCheck)){
+                System.out.println("What grade did the student get?");
+                char newGrade = input.next().charAt(0);
                 course.setComplete(true);
-                this.totalPoints = this.totalPoints + course.givePointsEarned();
+                this.totalPoints = this.totalPoints + course.givePointsEarned(newGrade);
                 hoursDone = hoursDone + course.getCourseHours();
                 completedCourse.add(course);
                 studentSchedule.remove(course);
