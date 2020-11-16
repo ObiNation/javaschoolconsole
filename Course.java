@@ -51,9 +51,7 @@ public class Course {
         return courseLevel;
     }
 
-    public void setCoursePoints(double coursePoints) {
-        this.coursePoints = coursePoints;
-    }
+
 
     public void setCourseHours(double courseHours) {
         this.courseHours = courseHours;
@@ -89,8 +87,9 @@ public class Course {
         return courseID;
     }
 
-    public double givePointsEarned(){
+    public double givePointsEarned(char newGrade){
         //multiplies the grade by the total hours of the course to give the points earned
+        this.grade = newGrade;
         switch (this.grade){
             case 'A' -> this.coursePoints = 4 * this.courseHours;
             case 'B' -> this.coursePoints = 3 * this.courseHours;
