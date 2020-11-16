@@ -51,23 +51,27 @@ public class Main {
         System.out.println("3: Back to previous menu");
         Scanner searchNameInput = new Scanner(System.in);
 
-        switch (searchNameInput.nextInt()) {
-            case 1 -> {
-                System.out.println(" ");
-                searchStudentName();
+        try{
+            switch (searchNameInput.nextInt()) {
+                case 1 -> {
+                    System.out.println(" ");
+                    searchStudentName();
+                }
+                case 2 -> {
+                    System.out.println(" ");
+                    searchStudentID();
+                }
+                case 3 -> {
+                    System.out.println(" ");
+                    mainMenu();
+                }
+                default -> {
+                    System.err.println("Invalid Choice...returning to previous menu");
+                    mainMenu();
+                }
             }
-            case 2 -> {
-                System.out.println(" ");
-                searchStudentID();
-            }
-            case 3 -> {
-                System.out.println(" ");
-                mainMenu();
-            }
-            default -> {
-                System.err.println("Invalid Choice...returning to previous menu");
-                mainMenu();
-            }
+        } catch (Exception e){
+            System.out.print("Invalid input");
         }
 
     }
@@ -79,13 +83,17 @@ public class Main {
         System.out.println("=============================");
         Scanner studentNameSearch = new Scanner(System.in);
         String nameToSearch = studentNameSearch.nextLine();
-        for (Student searchStudent : studentList){ //basic loop to search through the list of student by the name
-            if (searchStudent.getLastName().equals(nameToSearch)){
-                searchStudent.printStudentInfo();
+        try{
+            for (Student searchStudent : studentList) { //basic loop to search through the list of student by the name
+                if (searchStudent.getLastName().equals(nameToSearch)) {
+                    searchStudent.printStudentInfo();
+                } else {
+                    System.err.println("Could not find a student with that last name");
+                }
             }
-            else{
-                System.err.println("Could not find a student with that last name");
-            }
+        } catch (Exception e){
+            System.out.println("Invalid input...returning to previous menu");
+            searchStudent();
         }
         mainMenu();
     }
@@ -137,9 +145,9 @@ public class Main {
                 num = 2;
 
             }
-        } catch (IllegalStateException | NoSuchElementException e)
+        } catch (Exception e)
         {
-            System.out.println("System.in was closed; exiting");
+            System.err.println("Error registering course");
         }
         System.out.println("=========================");
         System.out.println("Returning to main menu");
@@ -323,6 +331,7 @@ public class Main {
             }
             else{
                 System.err.println("Could not find student based on that ID");
+                mainMenu();
             }
         }
     }
@@ -391,48 +400,86 @@ public class Main {
 
          public static void inputMenu(){
         Scanner input = new Scanner(System.in);
+        boolean isEmpty = studentList.isEmpty();
+        boolean isEmpty1 = courseList.isEmpty();
+        try {
+            //searchCourse method that searches the list of courses based on course code
+            switch (input.nextInt()) {
+                case 1 -> {
+                    System.out.println("Registering a new student");
+                    System.out.println(" ");
+                    registerStudent();
+                }
+                case 2 -> {
+                    if (isEmpty){
+                        System.err.println("There are no students yet. Returning to previous menu");
+                        mainMenu();
+                    }
+                    else {
+                        System.out.println("Searching for student");
+                        System.out.println(" ");
+                        searchStudent();//searchStudent method that searches the list of students based on last name
+                    }
+                }
+                case 3 -> {
+                    if (isEmpty1){
+                        System.err.println("There are no courses yet... returning to previous menu");
+                        mainMenu();
+                    }
+                    else {
+                        System.out.println("Loading menu...");
+                        System.out.println(" ");
+                        searchCourse();
+                    }
+                }
+                case 4 -> {
+                        System.out.println("Register a new course");
+                        System.out.println(" ");
+                        registerCourse();
+                    }
 
-             //searchCourse method that searches the list of courses based on course code
-             switch (input.nextInt()) {
-                 case 1 -> {
-                     System.out.println("Registering a new student");
-                     System.out.println(" ");
-                     registerStudent();
-                 }
-                 case 2 -> {
-                     System.out.println("Searching for student");
-                     System.out.println(" ");
-                     searchStudent();//searchStudent method that searches the list of students based on last name
-                 }
-                 case 3 -> {
-                     System.out.println("Loading menu...");
-                     System.out.println(" ");
-                     searchCourse();
-                 }
-                 case 4 -> {
-                     System.out.println("Register a new course");
-                     System.out.println(" ");
-                     registerCourse();
-                 }
-                 case 5 -> {
-                     System.out.println("Getting list of Students...");
-                     System.out.println(" ");
-                     printAllStudents();
-                 }
-                 case 6 -> {
-                     System.out.println("Getting a list of courses");
-                     System.out.println(" ");
-                     printAllCourse();
-                 }
-                 case 7 ->{
-                     editStudentInfo();
-                 }
-                 case 0 -> {
-                     System.out.println(" ");
-                     quitMenu();
-                 }
-                 default -> System.err.println("Invalid choice...");
-             }
+                case 5 -> {
+                    if (isEmpty) {
+                        System.err.println("There are no students yet. Returning to previous menu");
+                        mainMenu();
+                    }
+                    else {
+                        System.out.println("Getting list of Students...");
+                        System.out.println(" ");
+                        printAllStudents();
+                    }
+                }
+                case 6 -> {
+                    if (isEmpty1){
+                        System.err.println("There are no courses yet... returning to previous menu");
+                        mainMenu();
+                    }
+                    else {
+                        System.out.println("Getting a list of courses");
+                        System.out.println(" ");
+                        printAllCourse();
+                    }
+                }
+                case 7 -> {
+                    if (isEmpty) {
+                        System.err.println("There are no students yet. Returning to previous menu");
+                        mainMenu();
+                    }
+                    else {
+                        editStudentInfo();
+                    }
+                }
+                case 0 -> {
+                    System.out.println(" ");
+                    quitMenu();
+                }
+                default -> {
+                }
+            }
+        } catch (Exception e){
+            System.err.println("Invalid choice...returning to previous menu");
+            mainMenu();
+        }
         }
 
         public static void printAllStudents(){
